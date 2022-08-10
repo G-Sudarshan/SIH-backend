@@ -1,4 +1,4 @@
 # SIH-backend
 
 ## Team
-. Sudarshan
+- Sudarshan
