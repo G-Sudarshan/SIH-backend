@@ -1,7 +1,7 @@
 const { response } = require("express");
 const College = require("../models/College");
 
-const Reason = require("../models/Reason");
+// const Reason = require("../models/Reason");
 
 const AddCollege = async (req, res) => {
   try {
