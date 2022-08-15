@@ -11,9 +11,11 @@ app.use(express.json());
 
 //Routes
 const User = require("./routes/UserRoute");
+const College = require("./routes/CollegeRoute");
 
 //custom middlewares
 app.use("/api/v1/user", User);
+app.use("/api/v1/college", College);
 
 app.get("/", (req, res) => {
   res.json({ message: "On Home Page" });
