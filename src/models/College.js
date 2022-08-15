@@ -22,7 +22,7 @@ const CollegeSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    instutionType: {
+    institutionType: {
       type: String,
       required: true,
     },
