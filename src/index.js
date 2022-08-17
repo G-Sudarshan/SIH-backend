@@ -17,15 +17,11 @@ const CSV = require("./routes/CSVRoute");
 
 const AICTE = require("./routes/AICTERoute");
 
-
 //custom middlewares
 app.use("/api/v1/user", User);
 app.use("/api/v1/college", College);
-
 app.use("/api/v1/csv", CSV);
-
 app.use("/api/v1/AICTE", AICTE);
-
 
 app.get("/", (req, res) => {
   res.json({ message: "On Home Page" });

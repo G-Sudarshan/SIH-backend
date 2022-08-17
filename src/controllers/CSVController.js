@@ -1,7 +1,7 @@
 const csvToJson = require("csvtojson");
 const CSV = require("../models/CSV");
 
-const AddUser = async (req, res) => {
+const AddCSV = async (req, res) => {
   try {
     const jsonArray = await csvToJson().fromFile(
       `${__dirname}/./placement_data.csv`
@@ -16,7 +16,7 @@ const AddUser = async (req, res) => {
       jsonArray[index].ctcOffered = parseFloat(jsonArray[index].ctcOffered);
     }
     const records = new CSV({
-      collegeId: "62fa2aece66cf0d26ca4bfda",
+      collegeId: "62fa2a7cfa0d385762e2948c",
       placementData: jsonArray,
       year: 2022,
     });
@@ -34,4 +34,12 @@ const AddUser = async (req, res) => {
   }
 };
 
-module.exports = { AddUser };
+// const AddPlacementData = async (req, res) => {
+//   try {
+//     const placementData = await
+//   } catch (error) {
+//     console.log({ Error: error });
+//   }
+// };
+
+module.exports = { AddCSV };

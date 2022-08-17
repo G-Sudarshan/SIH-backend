@@ -1,8 +1,8 @@
 const express = require("express");
 
 const CSVRouter = express.Router();
-const { AddUser } = require("../controllers/CSVController");
+const { AddCSV } = require("../controllers/CSVController");
 
-CSVRouter.get("/addCSV", AddUser);
+CSVRouter.get("/addCSV", AddCSV);
 
 module.exports = CSVRouter;
