@@ -1,15 +1,12 @@
 const mongoose = require("mongoose");
 
-
 const ReasonSchema = new mongoose.Schema({
   reasons: [String],
-  year:{
-      type: Number,
-      required: true,
-  }
-},
-);
-
+  year: {
+    type: Number,
+    required: true,
+  },
+});
 
 const CollegeSchema = new mongoose.Schema(
   {
@@ -47,15 +44,11 @@ const CollegeSchema = new mongoose.Schema(
       default: false,
     },
     program: [String],
-    reasons:[ReasonSchema]
+    reasons: [ReasonSchema],
   },
   {
     timestamps: true,
   }
 );
 
-
-
-
 module.exports = mongoose.model("College", CollegeSchema);
-

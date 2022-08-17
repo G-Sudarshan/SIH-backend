@@ -1,5 +1,6 @@
 const College = require("../models/College");
 
+
 const AddCollege = async (req, res) => {
   try {
     const college = new College(req.body);
