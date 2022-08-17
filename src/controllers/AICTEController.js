@@ -29,7 +29,6 @@ const GetReasonsFreaquencyMap = async (req, res) => {
         });
       });
     });
-
     res.status(200).json(map);
   } catch (error) {
     res.status(500).json({ Error: error });
