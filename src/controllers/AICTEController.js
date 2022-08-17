@@ -18,8 +18,8 @@ const GetReasonsFreaquencyMap = async (req, res) => {
 
     try{
         const reasons = await College.find({ },{"reasons": 1});
-        console.log("reached inside function");
-        console.log(reasons[0]["reasons"][1]["reasons"]);
+        //console.log("reached inside function");
+        //console.log(reasons[0]["reasons"][1]["reasons"]);
         const map = {};
         reasons.forEach(reasonObject => {
             let reasonsL1 = reasonObject["reasons"];
