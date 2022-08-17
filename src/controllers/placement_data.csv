@@ -1,0 +1,19 @@
+aadharNumber,rollNumber,name,companyName,companyType,ctcOffered,gender,minority,program,branch,status,category,mobileNumber,emailID
+411341134001,411301,Vedangi,Google,Product,59,Female,Yes,Engineering and Technology,Computer Engineering,Employed,OBC,7028429845,student@gmail.com
+411341134002,411302,Sudarshan,PhonePe,Product,59,Male,Yes,Engineering and Technology,Computer Engineering,Employed,Open,7028429845,student@gmail.com
+411341134003,411303,Harshal,Google,Product,59,Male,No,Engineering and Technology,Information Technology,Employed,SC,7028429845,student@gmail.com
+411341134004,411304,Shubham,PhonePe,Product,59,Male,No,Engineering and Technology,Information Technology,Employed,ST,7028429845,student@gmail.com
+411341134005,411305,Yuvraj,Google,Product,59,Male,No,Engineering and Technology,Electronics and telecommunication,Employed,OBC,7028429845,student@gmail.com
+411341134006,411306,Sudarshan,PhonePe,Product,59,Female,No,Engineering and Technology,Electronics and telecommunication,Employed,Open,7028429845,student@gmail.com
+411341134007,411307,Vaishnavi,Zepto,Startup,28,Female,No,Engineering and Technology,Computer Engineering,Employed,SC,7028429845,student@gmail.com
+411341134008,411308,Rashmi,Zepto,Startup,24,Female,No,Engineering and Technology,Computer Engineering,Employed,ST,7028429845,student@gmail.com
+411341134009,411309,Nirmal,Zepto,Startup,20,Female,No,Engineering and Technology,Information Technology,Employed,OBC,7028429845,student@gmail.com
+411341134010,411310,Rutuja,Zepto,Startup,16,Female,No,Engineering and Technology,Information Technology,Employed,Open,7028429845,student@gmail.com
+411341134011,411311,Yogita,Zepto,Startup,12,Female,No,Engineering and Technology,Electronics and telecommunication,Employed,SC,7028429845,student@gmail.com
+411341134012,411312,Srushti,Barclays,Fintech,8,Male,No,Engineering and Technology,Electronics and telecommunication,Employed,ST,7028429845,student@gmail.com
+411341134013,411313,Aaditya,Barclays,Fintech,8,Male,No,Engineering and Technology,Computer Engineering,Employed,OBC,7028429845,student@gmail.com
+411341134014,411314,Ashish,Barclays,Fintech,8,Male,No,Engineering and Technology,Computer Engineering,Employed,Open,7028429845,student@gmail.com
+411341134015,411315,Ritik,ZS Associates,Consultant,12,Male,No,Engineering and Technology,Information Technology,Unemployed,SC,7028429845,student@gmail.com
+411341134016,411316,Tanya,ZS Associates,Consultant,16,Female,No,Engineering and Technology,Information Technology,Unemployed,ST,7028429845,student@gmail.com
+411341134017,411317,Priyanka,Aleph Edge,Other,20,Female,No,Engineering and Technology,Electronics and telecommunication,Higher studies,OBC,7028429845,student@gmail.com
+411341134018,411318,Anuj,Aleph Edge,Other,24,Male,No,Engineering and Technology,Electronics and telecommunication,Higher studies,Open,7028429845,student@gmail.com
