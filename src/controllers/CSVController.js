@@ -14,13 +14,11 @@ const AddCSV = async (req, res) => {
         jsonArray[index].minority = false;
       }
       jsonArray[index].ctcOffered = parseFloat(jsonArray[index].ctcOffered);
+
+      jsonArray[index].collegeId = "62fa2a7cfa0d385762e2948c";
+      jsonArray[index].year = 2022;
     }
-    const records = new CSV({
-      collegeId: "62fa2a7cfa0d385762e2948c",
-      placementData: jsonArray,
-      year: 2022,
-    });
-    await records.save();
+    const records = await CSV.insertMany(jsonArray);
 
     res.status(200).json({
       status: 200,
@@ -29,17 +27,25 @@ const AddCSV = async (req, res) => {
         records,
       },
     });
+    res.json(jsonArray);
   } catch (error) {
     console.log({ Error: error });
   }
 };
 
-// const AddPlacementData = async (req, res) => {
-//   try {
-//     const placementData = await
-//   } catch (error) {
-//     console.log({ Error: error });
-//   }
-// };
+const AddPlacementData = async (req, res) => {
+  try {
+    const distinct_program_array = await CSV.distinct("program", {
+      collegeId: "62fa2a7cfa0d385762e2948c",
+      year: "2022",
+    });
+    res.json(distinct_program_array);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-module.exports = { AddCSV };
+module.exports = { AddCSV, AddPlacementData };
+
+// Option 1 :
+// Option 2 :
