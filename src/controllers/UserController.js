@@ -6,18 +6,18 @@ const signUpUser = async (req, res) => {
   try {
     const user = new User(req.body);
 
-    //Checking if user already exists
-    const checkUser = await User.findUsingCredentials(
-      user.userName,
-      user.password
-    );
+    // //Checking if user already exists
+    // const checkUser = await User.findUsingCredentials(
+    //   user.userName,
+    //   user.password
+    // );
 
-    if (checkUser) {
-      res.status(400).json({
-        status: 201,
-        message: "User Already Exists !",
-      });
-    }
+    // if (checkUser) {
+    //   res.status(400).json({
+    //     status: 201,
+    //     message: "User Already Exists !",
+    //   });
+    // }
 
     //Saving the new User
     await user.save();
@@ -31,7 +31,7 @@ const signUpUser = async (req, res) => {
       body: { user, token },
     });
   } catch (error) {
-    res.status(500).json({ Error: error });
+    res.status(500).json(error);
   }
 };
 
