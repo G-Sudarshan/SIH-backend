@@ -54,6 +54,22 @@ const PlacementSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    minorityCountPlaced: {
+      type: Number,
+      required: true,
+    },
+    minorityCountUnplaced: {
+      type: Number,
+      required: true,
+    },
+    state: {
+      type: String,
+      required: true,
+    },
+    institutionType: {
+      type: String,
+      required: true,
+    },
     companyType: {
       type: mongoose.Schema.Types.Mixed,
       required: true,

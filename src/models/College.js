@@ -32,6 +32,7 @@ const CollegeSchema = new mongoose.Schema(
     },
     institutionType: {
       type: String,
+
       required: true,
     },
     intakeCount: {
