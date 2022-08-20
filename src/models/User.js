@@ -53,13 +53,14 @@ const maxAge = 3 * 24 * 60 * 60;
 UserSchema.statics.findUsingCredentials = async (userName, password) => {
   const lowercaseUserName = userName;
   const user = await User.findOne({ userName: lowercaseUserName });
+
   if (!user) {
-    throw new Error("User not found");
+    throw "User not found";
   }
 
   const isFound = await bcrypt.compare(password, user.password);
   if (!isFound) {
-    throw new Error("You have entered wrong password");
+    throw "You have entered wrong password";
   }
   return user;
 };
