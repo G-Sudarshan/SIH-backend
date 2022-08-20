@@ -42,15 +42,37 @@ const PlacedUnplacedGraph = async (req, res) => {
 };
 
 const programWisePlacement = async (req, res) => {
+  const reqParams = req.body;
+  const { year } = reqParams;
   try {
-    const count = await Placement.aggregate([
-      {
-        $group: {
-          _id: "$program",
-          placedStudentCount: { $sum: "$placedStudentCount" },
+    let count;
+    if (year === "") {
+      count = await Placement.aggregate([
+        {
+          $group: {
+            _id: "$program",
+            placedStudentCount: { $sum: "$placedStudentCount" },
+            unplacedStudentCount: { $sum: "$unplacedStudentCount" },
+          },
         },
-      },
-    ]);
+      ]);
+    } else {
+      count = await Placement.aggregate([
+        {
+          $match: {
+            $or: [{ year: year }],
+          },
+        },
+        {
+          $group: {
+            _id: "$program",
+            placedStudentCount: { $sum: "$placedStudentCount" },
+            unplacedStudentCount: { $sum: "$unplacedStudentCount" },
+          },
+        },
+      ]);
+    }
+
     res.status(200).json(count);
   } catch (error) {
     res.status(200).json(error);

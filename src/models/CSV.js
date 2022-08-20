@@ -73,6 +73,14 @@ const CSVSchema = new mongoose.Schema(
       enum: ["Open", "OBC", "SC", "ST", "Other"],
       required: true,
     },
+    state: {
+      type: String,
+      required: true,
+    },
+    institutionType: {
+      type: String,
+      required: true,
+    },
     year: {
       type: Number,
       required: true,

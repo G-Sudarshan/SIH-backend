@@ -10,6 +10,11 @@ const addPlacementRecords = async (req, res) => {
       year: "2022",
     });
 
+    const collegeDetails = await CSV.findOne(
+      { collegeId: "62fa2a7cfa0d385762e2948c" },
+      { _id: 0, state: 1, institutionType: 1 }
+    );
+
     // Fetching all distinct branch for each year
     for (let i = 0; i < distinct_program_array.length; i++) {
       distinct_branch_array = await CSV.distinct("branch", {
@@ -90,10 +95,30 @@ const addPlacementRecords = async (req, res) => {
           branch: distinct_branch_array[j],
           collegeId: "62fa2a7cfa0d385762e2948c",
           year: "2022",
-          minority: "true",
-          status: { $not: { $eq: "Higher studies" } },
+          minority: true,
         });
         responseObj.minorityCount = count_minority_student;
+
+        count_minority_student_placed = await CSV.countDocuments({
+          program: distinct_program_array[i],
+          branch: distinct_branch_array[j],
+          collegeId: "62fa2a7cfa0d385762e2948c",
+          year: "2022",
+          minority: true,
+          status: "Employed",
+        });
+
+        responseObj.minorityCountPlaced = count_minority_student_placed;
+
+        count_minority_student_unplaced = await CSV.countDocuments({
+          program: distinct_program_array[i],
+          branch: distinct_branch_array[j],
+          collegeId: "62fa2a7cfa0d385762e2948c",
+          year: "2022",
+          minority: true,
+          status: "Unemployed",
+        });
+        responseObj.minorityCountUnplaced = count_minority_student_unplaced;
 
         const category = ["Open", "OBC", "SC", "ST", "Other"];
         categoryTotalCount = {};
@@ -133,9 +158,11 @@ const addPlacementRecords = async (req, res) => {
 
           companyTotalCount[company[k]] = count_company;
         }
-        responseObj.companyType = companyTotalCount;
 
+        responseObj.companyType = companyTotalCount;
         responseObj.year = 2022;
+        responseObj.state = collegeDetails.state;
+        responseObj.institutionType = collegeDetails.institutionType;
         responseObj.maleCount =
           responseObj.malePlacedStudentCount +
           responseObj.maleUnplacedStudentCount;
@@ -144,11 +171,11 @@ const addPlacementRecords = async (req, res) => {
           responseObj.femaleUnplacedStudentCount;
 
         responseArray.push(responseObj);
-        console.log(responseArray);
       }
     }
-    // const placementData = await Placement.insertMany(responseArray);
-    res.status(201).json(responseArray);
+    const placementData = await Placement.insertMany(responseArray);
+    console.log(collegeDetails);
+    res.status(201).json(placementData);
   } catch (error) {
     console.log(error);
   }
