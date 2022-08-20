@@ -163,4 +163,246 @@ const programWisePlacement = async (req, res) => {
     res.status(200).json(error);
   }
 };
-module.exports = { PlacedUnplacedGraph, programWisePlacement };
+
+const stateWisePlacement = async (req, res) => {
+  const reqParams = req.body;
+
+  let { year, gender, program, institutionType, minority } = reqParams;
+
+  try {
+    let count;
+    if(program === "")
+      {
+       
+        program = await Placement.distinct("program");
+        console.log(program);
+      }
+      else
+      {
+         let temp = program;
+         program = [];
+         program.push(temp);
+      }
+    if(institutionType === "")
+      {
+        
+        institutionType = await Placement.distinct("institutionType");
+        console.log(institutionType);
+      }
+      else
+      {
+        let temp = institutionType;
+        institutionType = [];
+        institutionType.push(temp);
+      }
+      
+      if(year === "")
+      {
+        
+        year = await Placement.distinct("year");
+        console.log(year);
+      }
+      else
+      {
+        let temp = year;
+        year = [];
+        year.push(temp);
+      }
+    
+    console.log(year,gender,program,institutionType,minority);
+   
+    if (year === "" && gender ==="" && program === "" && institutionType ==="" && minority === "" ) {
+      count = await Placement.aggregate([
+        {
+          $group: {
+            _id: "$state",
+            placedStudentCount: { $sum: "$placedStudentCount" },
+            unplacedStudentCount: { $sum: "$unplacedStudentCount" },
+          },
+        },
+      ]);
+    } 
+    else if(gender !== "")
+    {
+      //console.log("In else if gender");
+       count = await Placement.aggregate([
+        {
+          $match: {
+            $and: [{year: { $in: year}}, {program: { $in: program}}, {institutionType: { $in: institutionType}}],
+          },
+        },
+        {
+          $group: {
+            _id: "$state",
+            placedStudentCount: { $sum: "$femalePlacedStudentCount" },
+            unplacedStudentCount: { $sum: "$femaleUnplacedStudentCount" },
+          },
+         
+        },
+      ]);
+      
+    }
+    else if(minority !== "" )
+    {
+      //console.log("In else if minority");
+      count = await Placement.aggregate([
+        {
+          $match: {
+            $and: [{year: { $in: year}}, {program: { $in: program}}, {institutionType: { $in: institutionType}}],
+          },
+        },
+        {
+          $group: {
+            _id: "$state",
+            placedStudentCount: { $sum: "$minorityCountPlaced" },
+            unplacedStudentCount: { $sum: "$minorityCountUnplaced" },
+          },
+        },
+      ]);
+    }
+   
+   else {
+    //console.log("In else ");
+      count = await Placement.aggregate([
+        {
+          $match: {
+            $and: [{year: { $in: year}}, {program: { $in: program}}, {institutionType: { $in: institutionType}}],
+          },
+        },
+        {
+          $group: {
+            _id: "$state",
+            placedStudentCount: { $sum: "$placedStudentCount" },
+            unplacedStudentCount: { $sum: "$unplacedStudentCount" },
+          },
+        },
+      ]);
+    }
+
+    res.status(200).json(count);
+  } catch (error) {
+    res.status(200).json(error);
+  }
+};
+
+const institutionTypeWisePlacement = async (req, res) => {
+  const reqParams = req.body;
+
+  let { year, gender, program, state, minority } = reqParams;
+
+  try {
+    let count;
+    if(program === "")
+      {
+       
+        program = await Placement.distinct("program");
+        console.log(program);
+      }
+      else
+      {
+         let temp = program;
+         program = [];
+         program.push(temp);
+      }
+    if(state === "")
+      {
+        
+        state = await Placement.distinct("state");
+        console.log(state);
+      }
+      else
+      {
+        let temp = state;
+        state = [];
+        state.push(temp);
+      }
+      
+      if(year === "")
+      {
+        
+        year = await Placement.distinct("year");
+        console.log(year);
+      }
+      else
+      {
+        let temp = year;
+        year = [];
+        year.push(temp);
+      }
+    
+    console.log(year,gender,program,state,minority);
+   
+    if (year === "" && gender ==="" && program === "" && state ==="" && minority === "" ) {
+      count = await Placement.aggregate([
+        {
+          $group: {
+            _id: "$institutionType",
+            placedStudentCount: { $sum: "$placedStudentCount" },
+            unplacedStudentCount: { $sum: "$unplacedStudentCount" },
+          },
+        },
+      ]);
+    } 
+    else if(gender !== "")
+    {
+      //console.log("In else if gender");
+       count = await Placement.aggregate([
+        {
+          $match: {
+            $and: [{year: { $in: year}}, {program: { $in: program}}, {state: { $in: state}}],
+          },
+        },
+        {
+          $group: {
+            _id: "$institutionType",
+            placedStudentCount: { $sum: "$femalePlacedStudentCount" },
+            unplacedStudentCount: { $sum: "$femaleUnplacedStudentCount" },
+          },
+         
+        },
+      ]);
+      
+    }
+    else if(minority !== "" )
+    {
+      //console.log("In else if minority");
+      count = await Placement.aggregate([
+        {
+          $match: {
+            $and: [{year: { $in: year}}, {program: { $in: program}}, {state: { $in: state}}],
+          },
+        },
+        {
+          $group: {
+            _id: "$institutionType",
+            placedStudentCount: { $sum: "$minorityCountPlaced" },
+            unplacedStudentCount: { $sum: "$minorityCountUnplaced" },
+          },
+        },
+      ]);
+    }
+   
+   else {
+    //console.log("In else ");
+      count = await Placement.aggregate([
+        {
+          $match: {
+            $and: [{year: { $in: year}}, {program: { $in: program}}, {state: { $in: state}}],
+          },
+        },
+        {
+          $group: {
+            _id: "$institutionType",
+            placedStudentCount: { $sum: "$placedStudentCount" },
+            unplacedStudentCount: { $sum: "$unplacedStudentCount" },
+          },
+        },
+      ]);
+    }
+
+    res.status(200).json(count);
+  } catch (error) {
+    res.status(200).json(error);
+  }
+};
+module.exports = { PlacedUnplacedGraph, programWisePlacement, stateWisePlacement, institutionTypeWisePlacement };
