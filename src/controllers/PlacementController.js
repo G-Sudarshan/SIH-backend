@@ -2,11 +2,8 @@ const CSV = require("../models/CSV");
 const Placement = require("../models/Placement");
 
 const addPlacementRecords = async (req, res) => {
-  const responseObj = {};
-  const responseArray = [];
-
+  let responseArray = [];
   try {
-    responseObj.collegeId = req.body.collegeId;
     // Fetching all distinct programs for collegeId and year
     const distinct_program_array = await CSV.distinct("program", {
       collegeId: "62fa2a7cfa0d385762e2948c",
@@ -21,10 +18,11 @@ const addPlacementRecords = async (req, res) => {
         year: "2022",
       });
 
-      // userModel.countDocuments({name: "sam"});
       for (let j = 0; j < distinct_branch_array.length; j++) {
-        // placed count
-        // let placement_data_row = {};
+        const responseObj = {};
+        responseObj.collegeId = req.body.collegeId;
+        responseObj.program = distinct_program_array[i];
+        responseObj.branch = distinct_branch_array[j];
         count_placed_student = await CSV.countDocuments({
           program: distinct_program_array[i],
           branch: distinct_branch_array[j],
@@ -34,14 +32,7 @@ const addPlacementRecords = async (req, res) => {
         });
 
         responseObj.placedStudentCount = count_placed_student;
-        console.log(
-          "Placed stud for ",
-          distinct_branch_array[j],
-          " = ",
-          count_placed_student
-        );
 
-        // unplaced count
         count_unplaced_student = await CSV.countDocuments({
           program: distinct_program_array[i],
           branch: distinct_branch_array[j],
@@ -50,12 +41,6 @@ const addPlacementRecords = async (req, res) => {
           status: "Unemployed",
         });
         responseObj.unplacedStudentCount = count_unplaced_student;
-        console.log(
-          "Unplaced stud for ",
-          distinct_branch_array[j],
-          " = ",
-          count_unplaced_student
-        );
 
         count_male_placed_student = await CSV.countDocuments({
           program: distinct_program_array[i],
@@ -67,12 +52,6 @@ const addPlacementRecords = async (req, res) => {
         });
 
         responseObj.malePlacedStudentCount = count_male_placed_student;
-        console.log(
-          "Male placed stud for ",
-          distinct_branch_array[j],
-          " = ",
-          count_male_placed_student
-        );
 
         count_male_unplaced_student = await CSV.countDocuments({
           program: distinct_program_array[i],
@@ -84,12 +63,6 @@ const addPlacementRecords = async (req, res) => {
         });
 
         responseObj.maleUnplacedStudentCount = count_male_unplaced_student;
-        console.log(
-          "Male unplaced stud for ",
-          distinct_branch_array[j],
-          " = ",
-          count_male_unplaced_student
-        );
 
         count_female_placed_student = await CSV.countDocuments({
           program: distinct_program_array[i],
@@ -101,12 +74,6 @@ const addPlacementRecords = async (req, res) => {
         });
 
         responseObj.femalePlacedStudentCount = count_female_placed_student;
-        console.log(
-          "Female placed stud for ",
-          distinct_branch_array[j],
-          " = ",
-          count_female_placed_student
-        );
 
         count_female_unplaced_student = await CSV.countDocuments({
           program: distinct_program_array[i],
@@ -117,12 +84,6 @@ const addPlacementRecords = async (req, res) => {
           status: "Unemployed",
         });
         responseObj.femaleUnplacedStudentCount = count_female_unplaced_student;
-        console.log(
-          "Female unplaced stud for ",
-          distinct_branch_array[j],
-          " = ",
-          count_female_unplaced_student
-        );
 
         count_minority_student = await CSV.countDocuments({
           program: distinct_program_array[i],
@@ -133,12 +94,6 @@ const addPlacementRecords = async (req, res) => {
           status: { $not: { $eq: "Higher studies" } },
         });
         responseObj.minorityCount = count_minority_student;
-        console.log(
-          "Minority  stud for ",
-          distinct_branch_array[j],
-          " = ",
-          count_minority_student
-        );
 
         const category = ["Open", "OBC", "SC", "ST", "Other"];
         categoryTotalCount = {};
@@ -152,11 +107,10 @@ const addPlacementRecords = async (req, res) => {
             category: category[k],
             status: { $not: { $eq: "Higher studies" } },
           });
-          // console.log(category[k], " placement stud for ", distinct_branch_array[j], " = ", count_category);
+
           categoryTotalCount[category[k]] = count_category;
         }
         responseObj.category = categoryTotalCount;
-        console.log("categoryTotalCount = ", categoryTotalCount);
 
         const company = [
           "Fintech",
@@ -176,15 +130,12 @@ const addPlacementRecords = async (req, res) => {
             company: company[k],
             status: { $not: { $eq: "Higher studies" } },
           });
-          // console.log(category[k], " placement stud for ", distinct_branch_array[j], " = ", count_category);
+
           companyTotalCount[company[k]] = count_company;
         }
         responseObj.companyType = companyTotalCount;
-        console.log("companyTotalCount = ", companyTotalCount);
 
-        responseObj.branch = distinct_branch_array[j];
         responseObj.year = 2022;
-        responseObj.program = distinct_program_array[i];
         responseObj.maleCount =
           responseObj.malePlacedStudentCount +
           responseObj.maleUnplacedStudentCount;
@@ -193,15 +144,23 @@ const addPlacementRecords = async (req, res) => {
           responseObj.femaleUnplacedStudentCount;
 
         responseArray.push(responseObj);
-      } //for loop for branch array
-      console.log("Branch => ", distinct_branch_array);
-    } // for loop program array
-
-    const placementData = await Placement.insertMany(responseArray);
-    res.status(201).json(placementData);
+        console.log(responseArray);
+      }
+    }
+    // const placementData = await Placement.insertMany(responseArray);
+    res.status(201).json(responseArray);
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = { addPlacementRecords };
+const deleteAllRecords = async (req, res) => {
+  try {
+    const records = await Placement.remove({});
+    res.status(200).json({ message: "Deleted Successfully !" });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+module.exports = { addPlacementRecords, deleteAllRecords };

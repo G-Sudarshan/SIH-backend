@@ -5,21 +5,6 @@ const maxAge = 3 * 24 * 60 * 60;
 const signUpUser = async (req, res) => {
   try {
     const user = new User(req.body);
-
-    // //Checking if user already exists
-    // const checkUser = await User.findUsingCredentials(
-    //   user.userName,
-    //   user.password
-    // );
-
-    // if (checkUser) {
-    //   res.status(400).json({
-    //     status: 201,
-    //     message: "User Already Exists !",
-    //   });
-    // }
-
-    //Saving the new User
     await user.save();
     const token = await user.generateAuthToken();
 
@@ -41,9 +26,6 @@ const loginUser = async (req, res) => {
       req.body.userName,
       req.body.password
     );
-    if (!user) {
-      res.status(400).json({ status: 404, message: "User Not found !" });
-    }
 
     const token = await user.generateAuthToken();
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
