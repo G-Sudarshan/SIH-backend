@@ -26,7 +26,7 @@ app.use("/api/v1/placement", Placement);
 app.use("/api/v1/chart", Chart);
 
 app.get("/", (req, res) => {
-  res.json({ message: "On Home Page" });
+  res.json({ message: "On Home Page Gamma" });
 });
 
 const start = async () => {
