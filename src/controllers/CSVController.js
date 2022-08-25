@@ -30,13 +30,13 @@ const AddCSV = async (req, res) => {
       delete jsonArray[index].skills;
       jsonArray[index].skills = newArray;
     }
-    // const records = await CSV.insertMany(jsonArray);
+    const records = await CSV.insertMany(jsonArray);
 
     res.status(200).json({
       status: 200,
       message: "Placement data inserted Successfully !",
       body: {
-        jsonArray,
+        records,
       },
     });
     res.json(jsonArray);

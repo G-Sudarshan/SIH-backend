@@ -31,7 +31,7 @@ const getAllStudentsByYearAndBranch = async (req, res) => {
         $and: [
           { year: { $in: year } },
           { branch: { $in: branch } },
-          { skills: { $in: skills } },
+          { skills: { $all: skills } },
           { cgpa: { $gte: minCGPA, $lte: maxCGPA } },
         ],
       });
