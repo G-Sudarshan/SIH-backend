@@ -28,7 +28,7 @@ app.use("/api/v1/chart", Chart);
 app.use("/api/v1/student", Student);
 
 app.get("/", (req, res) => {
-  res.json({ message: "On Home Page" });
+  res.json({ message: "On Home Page Gamma" });
 });
 
 const start = async () => {
