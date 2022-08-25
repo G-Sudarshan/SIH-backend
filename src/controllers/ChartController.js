@@ -553,7 +553,6 @@ const yearWisePlacement = async (req, res) => {
   }
 };
 
-
 const programGenderWisePlacement = async (req, res) => {
   const reqParams = req.body;
 
@@ -587,11 +586,9 @@ const programGenderWisePlacement = async (req, res) => {
       year.push(temp);
     }
 
-
     console.log(year, state, institutionType, minority);
-    
+
     if (
-     
       year === "" &&
       state === "" &&
       institutionType === "" &&
@@ -607,7 +604,7 @@ const programGenderWisePlacement = async (req, res) => {
           },
         },
       ]);
-    }  else if (minority !== "") {
+    } else if (minority !== "") {
       console.log("In else if minority");
       count = await Placement.aggregate([
         {

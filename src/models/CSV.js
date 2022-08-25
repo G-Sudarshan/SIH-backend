@@ -85,6 +85,14 @@ const CSVSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    skills: {
+      type: [String],
+      required: true,
+    },
+    cgpa: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
