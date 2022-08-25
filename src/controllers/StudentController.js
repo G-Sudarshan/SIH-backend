@@ -6,13 +6,13 @@ const getAllStudentsByYearAndBranch = async (req, res) => {
   let students;
   try {
     if (year !== "" && branch !== "") {
-      students = await CSV.find({ year: year, branch: branch }).count();
+      students = await CSV.find({ year: year, branch: branch });
     } else if (year !== "") {
-      students = await CSV.find({ year: year }).count();
+      students = await CSV.find({ year: year });
     } else if (branch !== "") {
-      students = await CSV.find({ branch: branch }).count();
+      students = await CSV.find({ branch: branch });
     } else {
-      students = await CSV.find().count();
+      students = await CSV.find();
     }
 
     // const students = await CSV.find();
