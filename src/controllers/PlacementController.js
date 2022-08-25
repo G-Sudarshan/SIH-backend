@@ -1,5 +1,6 @@
 const CSV = require("../models/CSV");
 const Placement = require("../models/Placement");
+const csvToJson = require("csvtojson");
 
 const addPlacementRecords = async (req, res) => {
   let responseArray = [];
@@ -181,6 +182,62 @@ const addPlacementRecords = async (req, res) => {
   }
 };
 
+const addPlacementRecordsCSV = async (req, res) => {
+  try {
+    const jsonArray = await csvToJson().fromFile(
+      `${__dirname}/./placement_2.csv`
+    );
+
+    for (let index = 0; index < jsonArray.length; index++) {
+      jsonArray[index].companyType = {
+        Fintech: jsonArray[index].Fintech,
+        Product: jsonArray[index].Product,
+        Startup: jsonArray[index].Startup,
+        Consultant: jsonArray[index].Consultant,
+        Other: jsonArray[index].Other,
+      };
+      jsonArray[index].category = {
+        Open: jsonArray[index].Open,
+        OBC: jsonArray[index].OBC,
+        SC: jsonArray[index].SC,
+        ST: jsonArray[index].ST,
+        OtherC: jsonArray[index].OtherC,
+      };
+
+      //deleting company Type Records
+      delete jsonArray[index].Fintech;
+      delete jsonArray[index].Product;
+      delete jsonArray[index].Startup;
+      delete jsonArray[index].Consultant;
+      delete jsonArray[index].Other;
+
+      //deleting Category Records
+      delete jsonArray[index].Open;
+      delete jsonArray[index].OBC;
+      delete jsonArray[index].SC;
+      delete jsonArray[index].ST;
+      delete jsonArray[index].OtherC;
+    }
+
+    const placementData = await Placement.insertMany(jsonArray);
+    res.status(201).json(placementData);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const getAllPlacementRecords = async (req, res) => {
+  try {
+    const records = await Placement.find(
+      {},
+      { _id: 0, createdAt: 0, updatedAt: 0, __v: 0 }
+    );
+    res.status(200).json(records);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 const deleteAllRecords = async (req, res) => {
   try {
     const records = await Placement.remove({});
@@ -190,4 +247,9 @@ const deleteAllRecords = async (req, res) => {
   }
 };
 
-module.exports = { addPlacementRecords, deleteAllRecords };
+module.exports = {
+  addPlacementRecords,
+  deleteAllRecords,
+  getAllPlacementRecords,
+  addPlacementRecordsCSV,
+};
