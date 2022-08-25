@@ -4,7 +4,7 @@ const {
 const express = require("express");
 const StudentRouter = express.Router();
 
-StudentRouter.get(
+StudentRouter.post(
   "/getAllStudentsByYearAndBranch",
   getAllStudentsByYearAndBranch
 );
