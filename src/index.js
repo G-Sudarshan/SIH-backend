@@ -17,6 +17,7 @@ const AICTE = require("./routes/AICTERoute");
 const Placement = require("./routes/PlacmentRoute");
 const Chart = require("./routes/ChartRoute");
 const Student = require("./routes/StudentRoute");
+const Email = require("./routes/EmailRoute");
 
 //custom middlewares
 app.use("/api/v1/user", User);
@@ -26,6 +27,7 @@ app.use("/api/v1/AICTE", AICTE);
 app.use("/api/v1/placement", Placement);
 app.use("/api/v1/chart", Chart);
 app.use("/api/v1/student", Student);
+app.use("/api/v1/email", Email);
 
 app.get("/", (req, res) => {
   res.json({ message: "On Home Page Gamma" });
