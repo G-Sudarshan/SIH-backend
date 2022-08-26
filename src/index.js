@@ -32,7 +32,7 @@ app.use("/api/v1/email", Email);
 app.use("/api/v1/sms", SMS);
 
 app.get("/", (req, res) => {
-  res.json({ message: "On Home Page Gamma" });
+  res.json({ message: "On Home Page sms-test" });
 });
 
 const start = async () => {
