@@ -7,12 +7,13 @@ const sendSMS = (req, res) => {
      
     client.messages 
           .create({ 
-             body: 'From NodeJS Hello Sudarshan, We found your profile interesting and would like consider you for SDE Intern role at our company. Kindly contact hr@mycompany.com to initiate the recruitment process. ',  
+             body: req.body.body,  
              messagingServiceSid: process.env.MESSAGE_SID,      
-             to: process.env.TO
+             to: req.body.to
            }) 
-          .then(message => console.log(message.sid)) 
+          .then(message => res.status(200).json(message.sid)) 
           .done();
+          //res.status(200).json(reasons);
   };
   
   module.exports = { sendSMS };

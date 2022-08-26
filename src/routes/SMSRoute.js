@@ -5,6 +5,6 @@ const {
 
 const SMSRouter = express.Router();
 
-SMSRouter.get("/send_sms", sendSMS);
+SMSRouter.post("/send_sms", sendSMS);
 
 module.exports = SMSRouter;
